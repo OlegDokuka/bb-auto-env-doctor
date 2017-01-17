@@ -1,0 +1,12 @@
+# Node
+node_modules
+!node_modules/@types/node-ssh/*
+
+# NPM
+npm-*.log
+
+# VSCode
+.vscode
+
+# Build
+out

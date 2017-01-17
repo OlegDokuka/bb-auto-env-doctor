@@ -1,0 +1,15 @@
+{
+    "version": "2.1.5",
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "outDir": "out"
+    },
+    "exclude": [
+        "out/*",
+        "node_modules"
+    ]
+}
