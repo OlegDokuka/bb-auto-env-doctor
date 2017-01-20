@@ -1,18 +1,17 @@
 import { Strategy } from '.';
+import { isString } from 'lodash';
 import * as inquirer from 'inquirer';
 import * as NodeSSH from 'node-ssh';
-import { assign } from 'lodash';
 
 type SSHClientOptions<T> = T & { sshClient: NodeSSH.NodeSSH };
 
-export abstract class SSHStrategy<T, R, E> implements Strategy<SSHClientOptions<T>, SSHClientOptions<R>, SSHClientOptions<E>> {
+export abstract class SSHStrategy<T, R, E> implements Strategy<SSHClientOptions<T>, R, E> {
     client: NodeSSH.NodeSSH;
 
-    public apply(args: SSHClientOptions<T>): Promise<SSHClientOptions<R> | SSHClientOptions<E>> {
+    public apply(args: SSHClientOptions<T>): Promise<R | E> {
         this.client = args.sshClient;
 
-        return this.wrap(args)
-            .then(v => assign({}, { sshClient: this.client }, v), e => assign({}, { sshClient: this.client }, e));
+        return this.wrap(isString(args) ? args.toString() : args);
     }
 
     public abstract wrap(T): Promise<R | E>;

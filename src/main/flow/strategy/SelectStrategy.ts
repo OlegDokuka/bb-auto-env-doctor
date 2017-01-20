@@ -3,12 +3,12 @@ import { merge } from 'lodash';
 import * as inquirer from 'inquirer';
 
 
-export class ChoiseStrategy implements Strategy<string[], string[], string[]> {
+export class SelectStrategy implements Strategy<any[], any, any> {
     constructor(private message: string) { }
 
-    public apply(choices: string[]): Promise<string[]> {
+    public apply(choices: any[]): Promise<string> {
         return inquirer.prompt({
-            type: 'checkbox',
+            type: 'list',
             message: this.message,
             choices,
             name: 'result'

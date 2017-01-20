@@ -1,6 +1,6 @@
-import { assign } from 'lodash';
+import { assign, isArray, isString } from 'lodash';
 import { Strategy } from './strategy';
-import { Rule, DirectRule, SubRule } from '.';
+import { Rule, DirectRule, SubRule, RetryRule, RepeatRule, SwitchRule } from '.';
 
 
 export namespace Flow {
@@ -12,15 +12,31 @@ export namespace Flow {
         }
 
         public process(): Promise<any> {
-            return this.elements.reduce((p, c) => c.process(this.withContext(p)), new Promise((r, rj) => setTimeout(r, 0, this.initial)));
+            return this.elements.reduce((p, c) => c.process(this.withContext(p)), Promise.resolve(this.initial));
         }
 
         private withContext(input: Promise<any>): Promise<any> {
             return this.context
                 ? new Promise((r, rj) => input.then(
-                    v => r(assign([], this.context, v)),
-                    v => rj(assign([], this.context, v))
+                    v => r(this.assignContext(v)),
+                    v => rj(this.assignContext(v))
                 )) : input;
+        }
+        private assignContext(value: any) {
+            return isString(value)
+                ? assign(new String(value), this.context)
+                : this.isClassInstance(value)
+                    ? assign(value, this.context)
+                    : assign(isArray(value) ? [] : {}, this.context, value)
+        }
+
+        private isClassInstance(object: any) {
+            return object && object.constructor instanceof Function
+                && (
+                    object.constructor !== Object
+                    || object.constructor !== Function
+                    || object.constructor !== Number
+                )
         }
     }
 
@@ -62,6 +78,22 @@ export namespace Flow {
 
     export function context(...elements: Array<Rule<any, any> | Strategy<any, any, any>>): Rule<any, any> {
         return new FlowContextAdapterRule(adapt(...elements));
+    }
+
+    export function _switch(...cases: Array<SwitchRule.CaseRule>): SwitchRule {
+        return new SwitchRule(cases);
+    }
+
+    export function _case(predicate: (v: any) => boolean): (i: Rule<any, any> | Strategy<any, any, any>) => SwitchRule.CaseRule {
+        return i => new SwitchRule.CaseRule(predicate, adapt(i)[0]);
+    }
+
+    export function repeat(element: Strategy<any, any, any> | Rule<any, any>): Rule<any, any> {
+        return new RepeatRule(adapt(element)[0]);
+    }
+
+    export function retry(element: Strategy<any, any, any> | Rule<any, any>): Rule<any, any> {
+        return new RetryRule(adapt(element)[0]);
     }
 
     function adapt(...elements: Array<Rule<any, any> | Strategy<any, any, any>>): Array<Rule<any, any>> {
