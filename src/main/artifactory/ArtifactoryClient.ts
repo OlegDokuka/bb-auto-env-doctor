@@ -31,7 +31,8 @@ import { template, merge, trimStart } from 'lodash';
 import * as request from 'request';
 import * as path from 'path';
 import * as fs from 'fs';
-import { Checksum } from '../entity';
+import { Checksum, ArtifactoryItem } from '../entity';
+import { DomainQuery } from './DomainQuery';
 const md5File = require('md5-file');
 
 import { ArtifactoryApi, DefaultArtifactoryApi } from './ArtifactoryApi'
@@ -101,9 +102,31 @@ export class ArtifactoryClient implements ArtifactoryApi {
                 }));
     }
 
-    public quicksearch(name: string): Promise<Array<DefaultArtifactoryApi>>;
-    public quicksearch(name: string, repos: Array<string>): Promise<Array<DefaultArtifactoryApi>>;
-    public quicksearch(name: string, repos?: Array<string>): Promise<Array<DefaultArtifactoryApi>> {
+    public aql(query: DomainQuery): Promise<Array<ArtifactoryItem>> {
+        return new Promise((resolve, reject) =>
+            this.client.post(ArtifactoryClient.TEMPLATES.search({ type: 'aql' }), { body: query.query },
+                (error, response, body) => {
+                    if (error) {
+                        reject(error.message);
+                        return;
+                    }
+                    //We expect an OK return code.
+                    if (response.statusCode !== 200) {
+                        reject({ status: response.statusCode, errors: JSON.parse(body).errors });
+                        return;
+                    }
+
+                    if (body) {
+                        resolve(JSON.parse(body).results);
+                    } else {
+                        resolve([]);
+                    }
+                }));
+    }
+
+    public quicksearch(name: string): Promise<Array<string>>;
+    public quicksearch(name: string, repos: Array<string>): Promise<Array<string>>;
+    public quicksearch(name: string, repos?: Array<string>): Promise<Array<string>> {
         return new Promise((resolve, reject) =>
             this.client.get(ArtifactoryClient.TEMPLATES.search({ type: 'artifact' }), { qs: { name, repos: (repos || []).join(',') } },
                 (error, response, body) => {
@@ -120,7 +143,7 @@ export class ArtifactoryClient implements ArtifactoryApi {
                         resolve(Promise.all(JSON.parse(body).results
                             .map(v => v.uri)
                             .filter(v => /^http[s]?:\/\/.+?\/api\/storage\/(.*?)\/(.+)$/g.test(v))
-                            .map(v => this.getFileInfo.apply(this, /^http[s]?:\/\/.+?\/api\/storage\/(.*?)\/(.+)$/g.exec(v).slice(1, 3)))));
+                        /*.map(v => this.getFileInfo.apply(this, /^http[s]?:\/\/.+?\/api\/storage\/(.*?)\/(.+)$/g.exec(v).slice(1, 3))))*/));
                     } else {
                         resolve([]);
                     }

@@ -22,6 +22,9 @@ import { SearchArtifactsStrategy } from './SearchArtifactsStrategy';
 import { SelectStrategy } from './SelectStrategy';
 import { EmptyStrategy } from './EmptyStrategy';
 import { PromptStrategy } from './PromptStrategy';
+import { InputStrategy } from './InputStrategy';
+import { TomcatInfoStrategy } from './TomcatInfoStrategy';
+import { DeploymentInfoStrategy } from './DeploymentInfoStrategy';
 
 
 namespace Strategies {
@@ -52,8 +55,10 @@ namespace Strategies {
             return new CredentialsStrategy();
         }
 
-        export function upload() {
-            return new UploadMicroserviceStrategy();
+        export function upload();
+        export function upload(remove: boolean);
+        export function upload(remove?: boolean) {
+            return new UploadMicroserviceStrategy(remove);
         }
     }
 
@@ -69,6 +74,24 @@ namespace Strategies {
         export function remove() {
             return new RemoveMicroservicesStrategy();
         }
+
+        export function deployment() {
+            return new DeploymentInfoStrategy();
+        }
+    }
+
+    export namespace Tomcat {
+        export function start() {
+            return new TomcatStrategy('start');
+        }
+
+        export function stop() {
+            return new TomcatStrategy('stop');
+        }
+
+        export function status() {
+            return new TomcatInfoStrategy();
+        }
     }
 
     export function empty() {
@@ -77,6 +100,10 @@ namespace Strategies {
 
     export function prompt(message: string) {
         return new PromptStrategy(message);
+    }
+
+    export function input(message: string) {
+        return new InputStrategy(message);
     }
 
     export function map<T, R>(mapper: (val: T) => R) {
@@ -97,10 +124,6 @@ namespace Strategies {
 
     export function ping() {
         return new PingStrategy();
-    }
-
-    export function tomcat(action: 'start' | 'stop') {
-        return new TomcatStrategy(action);
     }
 }
 

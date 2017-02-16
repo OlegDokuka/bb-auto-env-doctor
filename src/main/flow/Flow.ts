@@ -1,6 +1,6 @@
 import { assign, isArray, isString } from 'lodash';
 import { Strategy } from './strategy';
-import { Rule, DirectRule, SubRule, RetryRule, RepeatRule, SwitchRule } from '.';
+import { Rule, DirectRule, SubRule, RetryRule, RepeatRule, SwitchRule, ProgressRule, PauseRule } from '.';
 
 
 export namespace Flow {
@@ -27,16 +27,16 @@ export namespace Flow {
                 ? assign(new String(value), this.context)
                 : this.isClassInstance(value)
                     ? assign(value, this.context)
-                    : assign(isArray(value) ? [] : {}, this.context, value)
+                    : assign(isArray(value) ? [] : {}, this.context, value);
         }
 
         private isClassInstance(object: any) {
-            return object && object.constructor instanceof Function
-                && (
-                    object.constructor !== Object
-                    || object.constructor !== Function
-                    || object.constructor !== Number
-                )
+            return object
+                && object.constructor instanceof Function
+                && object.constructor !== Object
+                && object.constructor !== Array
+                && object.constructor !== Function
+                && object.constructor !== Number;
         }
     }
 
@@ -94,6 +94,14 @@ export namespace Flow {
 
     export function retry(element: Strategy<any, any, any> | Rule<any, any>): Rule<any, any> {
         return new RetryRule(adapt(element)[0]);
+    }
+
+    export function pause(timeInMilliseconds: number): Rule<any, any> {
+        return new PauseRule(timeInMilliseconds);
+    }
+
+    export function progress(message: string, element: Strategy<any, any, any> | Rule<any, any>): Rule<any, any> {
+        return new ProgressRule(message, adapt(element)[0]);
     }
 
     function adapt(...elements: Array<Rule<any, any> | Strategy<any, any, any>>): Array<Rule<any, any>> {

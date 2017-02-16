@@ -13,6 +13,7 @@
     "request": "latest",
     "md5-file": "latest",
     "typescript": "latest",
+    "log-update": "latest",
 
 
     "@types/inquirer": "latest",

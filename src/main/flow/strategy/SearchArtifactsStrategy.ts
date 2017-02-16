@@ -1,6 +1,6 @@
-import { ArtifactoryStrategy, } from '.';
-import { MicroserviceInfo } from '../../entity';
-import { DefaultArtifactoryApi } from '../../artifactory';
+import { ArtifactoryStrategy } from '.';
+import { MicroserviceInfo, ArtifactoryItem } from '../../entity';
+import { DefaultArtifactoryApi, DomainQuery } from '../../artifactory';
 import { trim, fill, merge } from 'lodash';
 import * as inquirer from 'inquirer';
 
@@ -12,43 +12,57 @@ interface SemanticVersion {
     type: '' | 'RELEASE' | 'SNAPSHOT'
 }
 
-export class SearchArtifactsStrategy extends ArtifactoryStrategy<MicroserviceInfo, Array<MicroserviceInfo & DefaultArtifactoryApi>, Error> {
-    public wrap(info: MicroserviceInfo): Promise<Array<MicroserviceInfo & DefaultArtifactoryApi> | Error> {
+export class SearchArtifactsStrategy extends ArtifactoryStrategy<MicroserviceInfo, Array<ArtifactoryItem>, Error> {
+    public wrap(info: MicroserviceInfo): Promise<Array<ArtifactoryItem & MicroserviceInfo> | Error> {
         const given = this.parseVersion(info.version);
 
-        return this.client.quicksearch(`${info.artifactId}-*.war`)
-            .then(v => v
-                .filter(daa => this.compareVersions(given, this.parseVersion(daa.path.replace(/^(.+)\/(.+)\/(.+\.war)$/, '$2'))) < 1))
-            .then<Array<MicroserviceInfo & DefaultArtifactoryApi> | Error>(v =>
-                Promise.all(
-                    v.map(daa => daa.file(`/META-INF/maven/${info.groupId}/${info.artifactId}/pom.properties`)
-                        .then(pom => merge(daa, this.parsePomProperties(pom))))
-                ).then(vv =>
-                    vv.filter(inf => {
-                        const versionComparisonResult = this.compareVersions(given, this.parseVersion(inf.version));
+        return this.client.aql(DomainQuery.items().find({
+            name: { $match: `${info.artifactId}*.war` },
+            $or: [
+                { created: { $gt: info.packaged } },
+                { updated: { $gt: info.packaged } },
+            ],
+            $and: [
+                { name: { $nmatch: '*-boot*' } }
+            ]
+        })).then<Array<ArtifactoryItem & MicroserviceInfo>>(infos => infos.map(i => merge(i, {
+            packaged: new Date(i.updated ? i.updated : i.created),
+            version: i.path.replace(/^(.+)\/(.+)$/, '$2'),
+            artifactId: info.artifactId,
+            groupId: i.path.replace(/^(.+)\/(.+)\/(.+)$/, '$1').replace(/\//g, '.')
+        } as MicroserviceInfo)))
 
-                        if (versionComparisonResult === 0) {
-                            return info.packaged.getTime() < inf.packaged.getTime();
-                        }
+        // .then(v => v.filter(daa => this.compareVersions(given, this.parseVersion(daa.path.replace(/^(.+)\/(.+)$/, '$2'))) < 1))
+        //     .then<Array<MicroserviceInfo & DefaultArtifactoryApi> | Error>(v =>
+        //         Promise.all(
+        //             v.map(daa => daa.file(`/META-INF/maven/${info.groupId}/${info.artifactId}/pom.properties`)
+        //                 .then(pom => merge(daa, this.parsePomProperties(pom))))
+        //         ).then(vv =>
+        //             vv.filter(inf => {
+        //                 const versionComparisonResult = this.compareVersions(given, this.parseVersion(inf.version));
 
-                        return versionComparisonResult < 0;
-                    }).sort((a, b) => {
-                        const versionComparisonResult = this.compareVersions(
-                            this.parseVersion(a.version),
-                            this.parseVersion(b.version)
-                        );
+        //                 if (versionComparisonResult === 0) {
+        //                     return info.packaged.getTime() < inf.packaged.getTime();
+        //                 }
 
-                        if (versionComparisonResult === 0) {
-                            return a.packaged.getTime() > b.packaged.getTime()
-                                ? 1
-                                : a.packaged.getTime() < b.packaged.getTime()
-                                    ? -1
-                                    : 0;
-                        }
+        //                 return versionComparisonResult < 0;
+        //             }).sort((a, b) => {
+        //                 const versionComparisonResult = this.compareVersions(
+        //                     this.parseVersion(a.version),
+        //                     this.parseVersion(b.version)
+        //                 );
 
-                        return versionComparisonResult;
-                    }))
-            );
+        //                 if (versionComparisonResult === 0) {
+        //                     return a.packaged.getTime() > b.packaged.getTime()
+        //                         ? 1
+        //                         : a.packaged.getTime() < b.packaged.getTime()
+        //                             ? -1
+        //                             : 0;
+        //                 }
+
+        //                 return versionComparisonResult;
+        //             }))
+        //     );
     }
 
     private parsePomProperties(pomProps: string): MicroserviceInfo {

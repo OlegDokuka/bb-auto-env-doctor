@@ -1,4 +1,5 @@
-import { FileInfo } from '../entity';
+import { FileInfo, ArtifactoryItem } from '../entity';
+import { DomainQuery } from './DomainQuery';
 
 export interface ArtifactoryApi {
     check(): Promise<void>
@@ -9,8 +10,7 @@ export interface ArtifactoryApi {
     getFileInfo(repoKey: string, remotefilePath: string): Promise<DefaultArtifactoryApi>
     getFileInfo(repoKey: string, remotefilePath: string, innerFilePath: string): Promise<string>
 
-    quicksearch(name: string): Promise<Array<DefaultArtifactoryApi>>
-    quicksearch(name: string, repos: Array<string>): Promise<Array<DefaultArtifactoryApi>>
+    aql(query: DomainQuery): Promise<Array<ArtifactoryItem>>
 }
 
 export interface DefaultArtifactoryApi extends FileInfo {
