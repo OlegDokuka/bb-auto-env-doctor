@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { Flow } from './flow';
 import { ArtifactoryClient } from './artifactory';
 import { MicroserviceInfo, ArtifactoryItem, TomcatInfo, DeployInfo } from './entity';
