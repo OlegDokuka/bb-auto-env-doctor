@@ -1,15 +1,33 @@
 {
-  "name": "git ",
+  "name": "bb-auto-env-doctor",
   "version": "0.1.0",
-  "description": "asdasd",
+  "description": "Backbase Autoconfig Environment Manager & Doctor",
   "main": "out/index.js",
   "bin": {
-    "bb-auto-env": "out/index.js"
+    "bb-auto-env-doctor": "out/index.js"
   },
+  "keywords": [
+    "backbase",
+    "bb",
+    "env",
+    "environment"
+  ],
+  "license": "MIT",
   "files": [
     "out/"
   ],
-  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/OlegDokuka/bb-auto-env-doctor.git"
+  },
+  "author": {
+    "name": "Oleh Dokuka",
+    "email": "oleh@backbase.com"
+  },
+  "bugs": {
+    "url": "https://github.com/OlegDokuka/bb-auto-env-doctor/issues"
+  },
+  "homepage": "https://github.com/OlegDokuka/bb-auto-env-doctor",
   "cacheDirectories": [
     "node_modules"
   ],
