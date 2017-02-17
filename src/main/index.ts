@@ -49,7 +49,7 @@ Flow.of(
                     )
                 )),
                 Flow.progress('Stopping Tomcat Service', Strategies.Tomcat.stop()),
-                Flow.progress('Finalizing Step', Flow.pause(5000)),
+                Flow.progress('Finalizing Step', Flow.pause(60000)),
                 Strategies.map((c: { sshClient: NodeSSH.NodeSSH }) => ({ sshClient: c.sshClient }))
             )
         )

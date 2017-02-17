@@ -76,10 +76,12 @@ export class ProgressRule<T, R> extends Rule<T, R> {
                 return this.rule.process(Promise.resolve(v)).then(r => {
                     clearInterval(timer);
                     logUpdate(`${this.message}...Done`);
+                    console.log();
                     return Promise.resolve(r);
                 }, e => {
                     clearInterval(timer);
                     logUpdate(`${this.message}...Done`);
+                    console.log();
                     return Promise.reject(e);
                 })
             },
@@ -93,10 +95,12 @@ export class ProgressRule<T, R> extends Rule<T, R> {
                 return this.rule.process(Promise.reject(v)).then(r => {
                     clearInterval(timer);
                     logUpdate(`${this.message}...Done`);
+                    console.log();
                     return Promise.resolve(r);
                 }, e => {
                     clearInterval(timer);
                     logUpdate(`${this.message}...Done`);
+                    console.log();
                     return Promise.reject(e);
                 })
             },

@@ -1,20 +1,29 @@
 {
-  "name": "autoenv-configurator",
-  "version": "0.0.0",
+  "name": "git ",
+  "version": "0.1.0",
   "description": "asdasd",
-  "private": true,
+  "main": "out/index.js",
+  "bin": {
+    "bb-auto-env": "out/index.js"
+  },
+  "files": [
+    "out/"
+  ],
+  "private": false,
   "cacheDirectories": [
     "node_modules"
   ],
+  "dependencies": {
+    "inquirer": "^3.0.1",
+    "node-ssh": "^4.0.1",
+    "lodash": "^4.17.4",
+    "request": "^2.79.0",
+    "md5-file": "^3.1.1",
+    "log-update": "^1.0.2"
+  },
   "devDependencies": {
-    "inquirer": "latest",
-    "node-ssh": "latest",
-    "lodash": "latest",
-    "request": "latest",
-    "md5-file": "latest",
     "typescript": "latest",
-    "log-update": "latest",
-
+    "rimraf": "latest",
 
     "@types/inquirer": "latest",
     "@types/lodash": "latest",
@@ -25,8 +34,11 @@
   "engines": {
     "node": "^4.6.0"
   },
-  "main": "index.js",
   "scripts": {
-    "start": "node out/index.js"
+    "clean": "rimraf out/",
+    "build": "npm run clean && npm run tsc",
+    "tsc": "tsc --sourceMap",
+    "tsc-no-map": "tsc",
+    "prepublish": "npm run clean && npm run tsc-no-map"
   }
 }
