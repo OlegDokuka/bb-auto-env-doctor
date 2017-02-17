@@ -1,6 +1,6 @@
 {
   "name": "bb-auto-env-doctor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Backbase Autoconfig Environment Manager & Doctor",
   "main": "out/index.js",
   "bin": {
