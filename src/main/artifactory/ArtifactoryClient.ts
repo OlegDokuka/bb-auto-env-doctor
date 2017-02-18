@@ -33,24 +33,21 @@ import * as path from 'path'
 import * as fs from 'fs'
 import { Checksum, ArtifactoryItem } from '../entity'
 import { DomainQuery } from './DomainQuery'
+import { ArtifactoryApi, DefaultArtifactoryApi } from './ArtifactoryApi'
 const md5File = require('md5-file')
 
-import { ArtifactoryApi, DefaultArtifactoryApi } from './ArtifactoryApi'
-
-export namespace ArtifactoryClient {
-    export const API = {
+export class ArtifactoryClient implements ArtifactoryApi {
+    private static API = {
         storage: '/api/storage',
         build: '/api/build'
     }
-    export const TEMPLATES = {
+    private static TEMPLATES = {
         getInnerFileInfo: template(`/<%= repoKey %>/<%= filePath %>!/<%= innerFilePath %>`),
-        getFileInfo: template(`${API.storage}/<%= repoKey %>/<%= filePath %>`),
+        getFileInfo: template(`${ArtifactoryClient.API.storage}/<%= repoKey %>/<%= filePath %>`),
         filePath: template('/<%= repoKey %>/<%= filePath %>'),
         search: template('/api/search/<%= type %>')
     }
-}
 
-export class ArtifactoryClient implements ArtifactoryApi {
     private client: request.RequestAPI<request.Request, request.CoreOptions, any>
 
     /**
