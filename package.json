@@ -42,8 +42,10 @@
     "log-update": "^1.0.2"
   },
   "devDependencies": {
-    "typescript": "latest",
-    "rimraf": "latest",
+    "typescript": "^2.1.6",
+    "rimraf": "^2.5.4",
+    "tslint": "^4.4.2",
+    "tslint-config-standard": "^4.0.0",
 
     "@types/inquirer": "latest",
     "@types/lodash": "latest",
@@ -55,6 +57,7 @@
     "node": "^4.6.0"
   },
   "scripts": {
+    "lint": "tslint 'src/**/*.ts'",
     "clean": "rimraf out/",
     "build": "npm run clean && npm run tsc",
     "tsc": "tsc --sourceMap",
