@@ -10,7 +10,7 @@
 ## Quick Start
 
 ```sh
-# Install Typings CLI utility.
+# Install Baedor CLI utility.
 npm install bb-auto-env-doctor --global
 
 # Run tool-kit
