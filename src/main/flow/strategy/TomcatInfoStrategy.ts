@@ -1,6 +1,6 @@
-import { SSHStrategy } from '.';
-import { TomcatInfo } from '../../entity';
-import { merge, fromPairs, trim } from 'lodash';
+import { SSHStrategy } from '.'
+import { TomcatInfo } from '../../entity'
+import { merge, fromPairs, trim } from 'lodash'
 
 interface ExecutionError extends Error {
 }
@@ -11,7 +11,7 @@ export class TomcatInfoStrategy extends SSHStrategy<void, TomcatInfo, ExecutionE
             .then<TomcatInfo | ExecutionError>(r =>
                 r.stderr && !r.stderr.startsWith('Redirecting to /bin/systemctl')
                     ? Promise.reject(new Error(r.stderr))
-                    : Promise.resolve(this.parse(r.stdout)));
+                    : Promise.resolve(this.parse(r.stdout)))
     }
 
     private parse(output: string): TomcatInfo {
@@ -19,7 +19,7 @@ export class TomcatInfoStrategy extends SSHStrategy<void, TomcatInfo, ExecutionE
             .split('\n')
             .slice(1)
             .map(s => fromPairs<string>([trim(s, '\r ').split(': ')] as any))
-            .reduce((l, r) => merge(l, r));
+            .reduce((l, r) => merge(l, r))
 
         return {
             isLoaded: result['Loaded'].split(' ')[0] === 'loaded',
@@ -27,4 +27,3 @@ export class TomcatInfoStrategy extends SSHStrategy<void, TomcatInfo, ExecutionE
         }
     }
 }
-

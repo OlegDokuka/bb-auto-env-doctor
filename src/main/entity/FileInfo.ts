@@ -1,4 +1,4 @@
-import { Checksum } from '.';
+import { Checksum } from '.'
 
 export interface FileInfo {
     repo: string

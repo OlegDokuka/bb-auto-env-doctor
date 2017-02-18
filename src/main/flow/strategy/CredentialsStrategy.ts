@@ -1,6 +1,6 @@
-import { Strategy } from '.';
-import { Credentials } from '../../entity';
-import * as inquirer from 'inquirer';
+import { Strategy } from '.'
+import { Credentials } from '../../entity'
+import * as inquirer from 'inquirer'
 
 interface CredentialsAnswer extends inquirer.Answers, Credentials {
 }
@@ -19,6 +19,6 @@ export class CredentialsStrategy implements Strategy<void, CredentialsAnswer, Cr
             type: 'password',
             message: 'Password:',
             name: 'password'
-        }]);
+        }])
     }
 }

@@ -1,7 +1,7 @@
-import { Strategy } from '.';
-import { Credentials } from '../../entity';
-import * as URL from 'url';
-import * as inquirer from 'inquirer';
+import { Strategy } from '.'
+import { Credentials } from '../../entity'
+import * as URL from 'url'
+import * as inquirer from 'inquirer'
 
 interface CredentialsAnswer extends inquirer.Answers, Credentials {
 }
@@ -15,9 +15,9 @@ export class ArtifactoryCredentialsStrategy implements Strategy<void, Credential
             validate: a => {
                 try {
                     URL.parse(a)
-                    return true;
+                    return true
                 } catch (e) {
-                    return false;
+                    return false
                 }
             }
         }, {
@@ -28,6 +28,6 @@ export class ArtifactoryCredentialsStrategy implements Strategy<void, Credential
             type: 'password',
             message: 'Password:',
             name: 'password'
-        }]);
+        }])
     }
 }

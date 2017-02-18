@@ -1,8 +1,7 @@
-import { SSHStrategy } from '.';
-import { MicroserviceInfo } from '../../entity';
-import { merge, fromPairs, trim } from 'lodash';
-import * as inquirer from 'inquirer';
-
+import { SSHStrategy } from '.'
+import { MicroserviceInfo } from '../../entity'
+import { merge, fromPairs, trim } from 'lodash'
+import * as inquirer from 'inquirer'
 
 export class MicroserviceInfoStrategy extends SSHStrategy<string, MicroserviceInfo, Error> {
     public wrap(name: string): Promise<MicroserviceInfo | Error> {

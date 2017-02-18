@@ -1,6 +1,6 @@
-import { Strategy } from '.';
-import { merge } from 'lodash';
-import * as inquirer from 'inquirer';
+import { Strategy } from '.'
+import { merge } from 'lodash'
+import * as inquirer from 'inquirer'
 
 export class ConfirmStrategy implements Strategy<any, Boolean, Boolean> {
     constructor(private message: string) { }
@@ -9,6 +9,6 @@ export class ConfirmStrategy implements Strategy<any, Boolean, Boolean> {
             type: 'confirm',
             message: this.message,
             name: 'result'
-        }).then(r => r['result'] === true ? Promise.resolve() : Promise.reject(undefined));
+        }).then(r => r['result'] === true ? Promise.resolve() : Promise.reject(undefined))
     }
 }

@@ -1,5 +1,5 @@
-import { FileInfo, ArtifactoryItem } from '../entity';
-import { DomainQuery } from './DomainQuery';
+import { FileInfo, ArtifactoryItem } from '../entity'
+import { DomainQuery } from './DomainQuery'
 
 export interface ArtifactoryApi {
     check(): Promise<void>

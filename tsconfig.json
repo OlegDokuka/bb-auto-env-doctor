@@ -5,7 +5,11 @@
         "target": "es6",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "outDir": "out"
+        "outDir": "out",
+        "typeRoots": [
+            "./node_modules/@types/",
+            "./src/@types/"
+        ]
     },
     "exclude": [
         "out/*",

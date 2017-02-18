@@ -1,0 +1,81 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "@types/node-ssh@latest",
+        "scope": "@types",
+        "escapedName": "@types%2fnode-ssh",
+        "name": "@types/node-ssh",
+        "rawSpec": "latest",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/home/odokuka/Documents/Workspace/R&D/env-scr"
+    ]
+  ],
+  "_from": "@types/node-ssh@latest",
+  "_id": "@types/node-ssh@0.0.32",
+  "_inCache": true,
+  "_location": "/@types/node-ssh",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/node-ssh-0.0.32.tgz_1479848428749_0.701922400854528"
+  },
+  "_npmUser": {
+    "name": "types",
+    "email": "ts-npm-types@microsoft.com"
+  },
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "@types/node-ssh@latest",
+    "scope": "@types",
+    "escapedName": "@types%2fnode-ssh",
+    "name": "@types/node-ssh",
+    "rawSpec": "latest",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@types/node-ssh/-/node-ssh-0.0.32.tgz",
+  "_shasum": "a4a08e83741c500a7c3c8e7776014f7f8a65870d",
+  "_shrinkwrap": null,
+  "_spec": "@types/node-ssh@latest",
+  "_where": "/home/odokuka/Documents/Workspace/R&D/env-scr",
+  "author": {
+    "name": "Qubo",
+    "email": "https://github.com/tkQubo"
+  },
+  "dependencies": {
+    "@types/rx": "*",
+    "@types/through": "*"
+  },
+  "description": "TypeScript definitions for node-ssh.js",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "a4a08e83741c500a7c3c8e7776014f7f8a65870d",
+    "tarball": "https://registry.npmjs.org/@types/node-ssh/-/node-ssh-0.0.32.tgz"
+  },
+  "license": "MIT",
+  "main": "",
+  "maintainers": [
+    {
+      "name": "types",
+      "email": "ryan.cavanaugh@microsoft.com"
+    }
+  ],
+  "name": "@types/node-ssh",
+  "optionalDependencies": {},
+  "peerDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/DefinitelyTyped/DefinitelyTyped.git"
+  },
+  "scripts": {},
+  "typesPublisherContentHash": "377c692bf84e6eb4e7121ecb6bab2613efda88950fa6f0978946e0d29c66b5f4",
+  "typings": "index.d.ts",
+  "version": "0.0.32"
+}

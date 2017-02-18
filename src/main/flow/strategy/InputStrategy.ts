@@ -1,6 +1,6 @@
-import { Strategy } from '.';
-import { merge } from 'lodash';
-import * as inquirer from 'inquirer';
+import { Strategy } from '.'
+import { merge } from 'lodash'
+import * as inquirer from 'inquirer'
 
 export class InputStrategy implements Strategy<any, Boolean, Boolean> {
     constructor(private message: string) { }

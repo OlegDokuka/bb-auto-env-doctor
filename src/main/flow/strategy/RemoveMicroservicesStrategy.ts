@@ -1,6 +1,5 @@
-import { SSHStrategy } from '.';
-import * as inquirer from 'inquirer';
-
+import { SSHStrategy } from '.'
+import * as inquirer from 'inquirer'
 
 export class RemoveMicroservicesStrategy extends SSHStrategy<string[], void, Error> {
     public wrap(args: string[]): Promise<any> {

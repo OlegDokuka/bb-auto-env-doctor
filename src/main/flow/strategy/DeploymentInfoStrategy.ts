@@ -1,5 +1,5 @@
-import { SSHStrategy } from '.';
-import { DeployInfo } from '../../entity';
+import { SSHStrategy } from '.'
+import { DeployInfo } from '../../entity'
 
 interface ExecutionError extends Error {
 }
@@ -10,7 +10,6 @@ export class DeploymentInfoStrategy extends SSHStrategy<void, DeployInfo, Execut
             .then<DeployInfo | ExecutionError>(r =>
                 r.stderr
                     ? Promise.reject(new Error(r.stderr))
-                    : Promise.resolve({ isFinished: r.stdout === 'Finished!' }));
+                    : Promise.resolve({ isFinished: r.stdout === 'Finished!' }))
     }
 }
-
