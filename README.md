@@ -2,6 +2,7 @@
 
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][downloads-image]][downloads-url]
+[![Issues][issues-img]][issues-url]
 [![Build status][travis-image]][travis-url]
 
 > The Environment Manager
