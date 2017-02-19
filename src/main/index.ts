@@ -104,7 +104,10 @@ Flow.of(
             ),
             Strategies.empty()
         ),
-        Flow.progress('Starting Tomcat Service', Strategies.Tomcat.start()),
+        Flow.progress('Starting Tomcat Service', Flow.context(
+            Strategies.Tomcat.start(),
+            Strategies.Tomcat.ping()
+        )),
         Strategies.map(() => process.exit())
     )
 )()

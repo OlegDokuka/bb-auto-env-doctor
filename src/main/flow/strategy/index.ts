@@ -28,101 +28,101 @@ import { DeploymentInfoStrategy } from './DeploymentInfoStrategy'
 
 namespace Strategies {
     export namespace Artifactory {
-        export function client () {
+        export function client() {
             return new ArtifactoryConnectionStrategy()
         }
 
-        export function credentials () {
+        export function credentials() {
             return new ArtifactoryCredentialsStrategy()
         }
 
-        export function search () {
+        export function search() {
             return new SearchArtifactsStrategy()
         }
 
-        export function download () {
+        export function download() {
             return new DownloadArtifactStrategy()
         }
     }
 
     export namespace SSH {
-        export function connection () {
+        export function connection() {
             return new ConnectionStrategy()
         }
 
-        export function credentials () {
+        export function credentials() {
             return new CredentialsStrategy()
         }
 
-        export function upload ()
-        export function upload (remove: boolean)
-        export function upload (remove?: boolean) {
+        export function upload()
+        export function upload(remove: boolean)
+        export function upload(remove?: boolean) {
             return new UploadMicroserviceStrategy(remove)
         }
     }
 
     export namespace Microservice {
-        export function info () {
+        export function info() {
             return new MicroserviceInfoStrategy()
         }
 
-        export function list () {
+        export function list() {
             return new ListMicroservicesStrategy()
         }
 
-        export function remove () {
+        export function remove() {
             return new RemoveMicroservicesStrategy()
         }
 
-        export function deployment () {
+        export function deployment() {
             return new DeploymentInfoStrategy()
         }
     }
 
     export namespace Tomcat {
-        export function start () {
+        export function start() {
             return new TomcatStrategy('start')
         }
 
-        export function stop () {
+        export function stop() {
             return new TomcatStrategy('stop')
         }
 
-        export function status () {
+        export function status() {
             return new TomcatInfoStrategy()
+        }
+
+        export function ping() {
+            return new PingStrategy()
         }
     }
 
-    export function empty () {
+    export function empty() {
         return new EmptyStrategy()
     }
 
-    export function prompt (message: string) {
+    export function prompt(message: string) {
         return new PromptStrategy(message)
     }
 
-    export function input (message: string) {
+    export function input(message: string) {
         return new InputStrategy(message)
     }
 
-    export function map<T, R> (mapper: (val: T) => R) {
+    export function map<T, R>(mapper: (val: T) => R) {
         return new MapStrategy(mapper)
     }
 
-    export function Choice (message: string) {
+    export function Choice(message: string) {
         return new ChoiceStrategy(message)
     }
 
-    export function select (message: string) {
+    export function select(message: string) {
         return new SelectStrategy(message)
     }
 
-    export function confirm (message: string) {
+    export function confirm(message: string) {
         return new ConfirmStrategy(message)
-    }
-
-    export function ping () {
-        return new PingStrategy()
     }
 }
 
