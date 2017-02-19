@@ -7,6 +7,7 @@
 
 > The Environment Manager
 
+
 ## Quick Start
 
 ```sh
@@ -28,6 +29,9 @@ bb-auto-env-doctor
 ## Read More
 
 * [FAQ](docs/faq.md)
+* [Known issues and limitations](docs/kial.md)
+* [Functionality](docs/functionality.md)
+
 
 ## Contributing
 
@@ -48,6 +52,7 @@ npm run test
 ```
 
 ## [Change Log](https://github.com/OlegDokuka/bb-auto-env-doctor/releases)
+
 
 ## License
 
