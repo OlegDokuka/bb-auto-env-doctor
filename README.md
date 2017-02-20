@@ -20,7 +20,7 @@ bb-auto-env-doctor
 
 ## Usage
 
-**BB Env Doctor** is the simple way to configure and manage installation process of Backbase test environment.
+**BB Env Doctor** is a simple way to configure and manage installation process of Backbase test environment.
 
 ```sh
 bb-auto-env-doctor
