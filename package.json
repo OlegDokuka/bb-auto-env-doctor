@@ -1,6 +1,6 @@
 {
   "name": "bb-auto-env-doctor",
-  "version": "0.1.4",
+  "version": "0.1.4-0",
   "description": "Backbase Autoconfig Environment Manager & Doctor",
   "main": "out/index.js",
   "bin": {
@@ -46,7 +46,6 @@
     "rimraf": "^2.5.4",
     "tslint": "^4.4.2",
     "tslint-config-standard": "^4.0.0",
-
     "@types/inquirer": "latest",
     "@types/lodash": "latest",
     "@types/node": "latest",
