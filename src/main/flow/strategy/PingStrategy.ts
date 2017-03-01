@@ -1,6 +1,7 @@
 import { SSHStrategy } from '.'
 import * as request from 'request'
 import * as inquirer from 'inquirer'
+import { setTimeout } from 'timers'
 
 interface PingOptions {
     url: string

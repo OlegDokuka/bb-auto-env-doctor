@@ -1,6 +1,7 @@
 import { Rule } from '.'
 import * as inquirer from 'inquirer'
 import * as NodeSSH from 'node-ssh'
+import { setTimeout } from 'timers'
 
 export class PauseRule<T, R> extends Rule<T, R> {
     constructor(private timeInMilliseconds: number) { super() }
